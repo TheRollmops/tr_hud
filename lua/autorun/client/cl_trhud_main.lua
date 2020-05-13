@@ -8,6 +8,8 @@
 --          of my work              --
 --------------------------------------
 
+--[          Version 1.1           ]--
+
 -- Create a font
 surface.CreateFont( "TRHUDFFont", {
 	font = "Bebas Neue", 
@@ -79,6 +81,7 @@ surface.CreateFont( "TRHUDFFontA", {
 })
 -- Check the Gamemode
 function CheckGamemode()
+    if not TRHUD.DGlobal then return end -- Disable Global
     local namegamemode = gmod.GetGamemode().Name
     if namegamemode != "DarkRP" then
         timer.Simple(3, function()
@@ -95,6 +98,7 @@ local hideHUD = {
     ["CHudHealth"] = true,
     ["CHudBattery"] = true,
     ["CHudAmmo"] = true,
+    ["CHudSuitPower"] = true,
     ["CHudSecondaryAmmo"] = true,
     ["DarkRP_LocalPlayerHUD"] = true,
     ["DarkRP_Agenda"] = true,
@@ -105,8 +109,10 @@ local hideHUD = {
     ["DarkRP_EntityDisplay"] = true,
     ["DarkRP_LockdownHUD"] = true,
     ["DarkRP_ChatReceivers"] = true,
+    ["DarkRP_HUD"] = true -- FIX 
 }
 function Hide(name)
+    if not TRHUD.DGlobal then return end -- Disable Global
     if ( hideHUD[ name ] ) then return false end
 end
 hook.Add( "HUDShouldDraw", "HideHUD", Hide )
@@ -114,6 +120,7 @@ hook.Add( "HUDShouldDraw", "HideHUD", Hide )
 -- Create a New HUD 
 function MainHUD()
     local ply = LocalPlayer()
+    if not TRHUD.DGlobal then return end -- Disable Global
     if not ply:Alive() or not TRHUD.MainHUD then return end
     -- Hunger, Health and Armor
     local health = ply:Health()
@@ -221,8 +228,9 @@ end
 hook.Add( "HUDPaint", "DisplayMainHUD", MainHUD )
 
 -- Icon HUD
-if TRHUD.TypeIcon == "Picture" then
+if TRHUD.TypeIcon == "Avatar" then
     function PlayerPic()
+        if not TRHUD.DGlobal then return end -- Disable Global
         if not LocalPlayer():Alive() or not TRHUD.MainHUD then return end
         local avatar = vgui.Create("AvatarImage")
         avatar:SetPos(10, ScrH() - 167.5)
@@ -231,39 +239,44 @@ if TRHUD.TypeIcon == "Picture" then
         avatar:SetVisible(true)
         avatar:ParentToHUD()
     end
-elseif TRHUD.TypeIcon == "Playermodel" then
+elseif TRHUD.TypeIcon == "PlayerModel" then -- FIX
     function PlayerModel()
-        if not LocalPlayer():Alive() or not TRHUD.MainHUD then return end
-        local playermodel = LocalPlayer():GetModel()
-        local pm = vgui.Create("DModelPanel")
-        pm:SetPos(10, ScrH() - 167.5)
-        pm:SetSize(120, 120)
-        pm:SetModel(playermodel)
-
-        function pm:Think()
-            if pm:GetModel() != LocalPlayer():GetModel() then
-                pm:SetModel(LocalPlayer():GetModel())
-            end
-        end
-
-        function pm:LayoutEntity(Entity) return end
-        local posofhead = pm.Entity:GetBonePosition(pm.Entity:LookupBone( "ValveBiped.Bip01_Head1" ))
-        pm:SetLookAt( posofhead )
-        pm:SetCamPos( posofhead -Vector( -15, 3, 0 ))
+	    playermodel = vgui.Create("DModelPanel")
+	    function playermodel:LayoutEntity( Entity ) return end
+	    playermodel:SetModel( LocalPlayer():GetModel() )
+	    playermodel:SetPos(10, ScrH() - 167.5)
+	    playermodel:SetSize(120, 120)
+	    playermodel:SetCamPos(Vector( 16, 0, 65 ))
+	    playermodel:SetLookAt(Vector( 0, 0, 65 ))
+   
+	    timer.Create( "UpdatePlayerModel", 0.5, 0, function()
+			if LocalPlayer():GetModel() != playermodel.Entity:GetModel() then
+				playermodel:Remove()
+				playermodel = vgui.Create("DModelPanel")
+				function playermodel:LayoutEntity( Entity ) return end         
+				playermodel:SetModel( LocalPlayer():GetModel())
+				playermodel:SetPos(10, ScrH() - 167.5)
+				playermodel:SetSize(120, 120)
+				playermodel:SetCamPos(Vector( 16, 0, 65 ))
+				playermodel:SetLookAt(Vector( 0, 0, 65 ))
+		    end
+        end)
     end
 else
     timer.Simple(3, function()
+        if not TRHUD.DGlobal then return end -- Disable Global
         if not TRHUD.MainHUD then return end
         Error("[TR HUD] [ERROR]: TRHUD.TypeIcon, which can be found in the config file, is not properly configured!\n")
         net.Start("ErrorTypeIcon")
         net.SendToServer()
         end)
 end
-hook.Add( "InitPostEntity", "SteamPicture", PlayerPic )
-hook.Add( "InitPostEntity", "HUDPM", PlayerModel )
+hook.Add("InitPostEntity", "SteamPicture", PlayerPic)
+hook.Add("InitPostEntity", "HUDPM", PlayerModel)
 
 -- Create a new Ammo HUD
 function AmmoHUD()
+    if not TRHUD.DGlobal then return end -- Disable Global
     if not LocalPlayer():Alive() or not TRHUD.AmmoHUD then return end
     local weapon = LocalPlayer():GetActiveWeapon()
     if LocalPlayer():Alive() and (weapon:IsValid()) then
@@ -314,6 +327,7 @@ hook.Add( "HUDPaint", "DisplayAmmoHUD", AmmoHUD )
 
 -- Create a new Name HUD
 function NameHUD(ply)
+    if not TRHUD.DGlobal then return end -- Disable Global
     if ply == LocalPlayer() then return end
     if not ply:Alive() or not TRHUD.NameHUD then return end
     local distance = LocalPlayer():GetPos():Distance(ply:GetPos())
@@ -352,6 +366,7 @@ hook.Add("PostPlayerDraw", "DisplayNameHUD", NameHUD)
 
 -- Create a new Agenda HUD
 function AgendaHUD()
+    if not TRHUD.DGlobal then return end -- Disable Global
     if not LocalPlayer():Alive() or not TRHUD.AgendaHUD then return end
     local agenda = LocalPlayer():getAgendaTable()
     agendaText = agendaText or DarkRP.textWrap( ( LocalPlayer():getDarkRPVar( "agenda" ) or"" ):gsub( "//", "\n" ):gsub( "\\n", "\n" ), "TRHUDFFont", 440 )
@@ -387,6 +402,7 @@ hook.Add("DarkRPVarChanged", "DisplayAgendaUPD", AgendaUpdate)
 
 -- Create a new Lockdown HUD
 function LockdownHUD()
+    if not TRHUD.DGlobal then return end -- Disable Global
     if not LocalPlayer():Alive() or not TRHUD.LockdownHUD then return end
     local lockdown = GetGlobalBool("DarkRP_LockDown")
     if lockdown then
@@ -404,6 +420,7 @@ hook.Add("HUDPaint", "DisplayLockdownHUD", LockdownHUD)
 
 -- Create a new Death Screen
 function DeathScreen()
+    if not TRHUD.DGlobal then return end -- Disable Global
     if not TRHUD.DeathScreen then return end
     if not LocalPlayer():Alive() then
         TRHUD.DeathScreenT.a =  255 * math.cos(CurTime() * 3)
@@ -414,6 +431,7 @@ hook.Add("HUDPaint", "DisplayDeathScreen", DeathScreen)
 
 -- Create a new Voice chat HUD
 function VoiceChatHUD()
+    if not TRHUD.DGlobal then return end -- Disable Global
     if not TRHUD.VoiceChatHUD then return end
     if LocalPlayer():IsSpeaking() and LocalPlayer():Alive() then
         draw.RoundedBox(0, 10, ScrH() - 450, 250, 30, TRHUD.HUDBoxColor)

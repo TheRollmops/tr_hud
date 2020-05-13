@@ -7,9 +7,14 @@
 --  modify and / or take ownership  --
 --          of my work              --
 --------------------------------------
+
+--[          Version 1.1           ]--
+
 TRHUD = {}
 
 -- Config start here:
+
+TRHUD.DGlobal = true -- Enable TR HUD (!Need Restart for Server Side!)
 
 -- Enable 
 TRHUD.MainHUD = true -- Enable the Main HUD (Health, Armor, Job, Wallet, PM or Picture,...)(!Need a restart for the Client Side!).
@@ -17,7 +22,7 @@ TRHUD.AmmoHUD = true -- Enable the Ammo HUD.
 TRHUD.NameHUD = true -- Enable the Name HUD (This is the HUD above the player).
 TRHUD.AgendaHUD = true -- Enable the Agenda HUD.
 TRHUD.LockdownHUD = true -- Enable the Lockdown HUD. 
-TRHUD.DeathScreen = true -- Enabele the Death Screen.
+TRHUD.DeathScreen = false -- Enable the Death Screen. By default the deathscreen is disabled, but if you don't have TR DSC, you can set it to true.
 TRHUD.VoiceChatHUD = true -- Enable the Voice Chat HUD (This is the hud that appears when you speak).
 
 -- Color 
@@ -34,8 +39,8 @@ TRHUD.DeathScreenT = Color(255, 255, 255, 255) --Choose a color for the Text of 
 TRHUD.ServerName = "Server Name" -- Your Server Name.
 TRHUD.LangSelect = "en" -- Choose between English or French (en or fr). Nevertheless you can create your own language in the Language Category.
 TRHUD.Currency = "$" -- Choose your currency (exemple: €, $, £, ...).
-TRHUD.TypeIcon = "Picture" -- Choose between a view your Playermodel or your Steam profil picture (Picture or Playermodel).
-
+TRHUD.TypeIcon = "Avatar" -- Choose between a view your PlayerModel or your Steam Avatar (Avatar or  ̶PlayerModel). 
+                        
 -- Language
 TRHUD.Lang = {
 --  You can create a new language like this:
