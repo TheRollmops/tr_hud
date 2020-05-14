@@ -8,13 +8,13 @@
 --          of my work              --
 --------------------------------------
 
---[          Version 1.1           ]--
+--[          Version 1.2           ]--
 
 TRHUD = {}
 
 -- Config start here:
 
-TRHUD.DGlobal = true -- Enable TR HUD (!Need Restart for Server Side!)
+TRHUD.DGlobal = true -- Enable TR HUD (!Need Restart for Server Side!).
 
 -- Enable 
 TRHUD.MainHUD = true -- Enable the Main HUD (Health, Armor, Job, Wallet, PM or Picture,...)(!Need a restart for the Client Side!).

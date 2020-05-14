@@ -8,7 +8,7 @@
 --          of my work              --
 --------------------------------------
 
---[          Version 1.1           ]--
+--[          Version 1.2           ]--
 
 -- Create a font
 surface.CreateFont( "TRHUDFFont", {
@@ -241,6 +241,7 @@ if TRHUD.TypeIcon == "Avatar" then
     end
 elseif TRHUD.TypeIcon == "PlayerModel" then -- FIX
     function PlayerModel()
+        if not TRHUD.DGlobal or not TRHUD.MainHUD then return end -- Fix
 	    playermodel = vgui.Create("DModelPanel")
 	    function playermodel:LayoutEntity( Entity ) return end
 	    playermodel:SetModel( LocalPlayer():GetModel() )

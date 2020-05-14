@@ -8,9 +8,9 @@
 --          of my work              --
 --------------------------------------
 
---[          Version 1.1           ]--
+--[          Version 1.2           ]--
 
-local version = "1.1"
+local version = "1.2"
 
 util.AddNetworkString("ErrorGamemode")
 util.AddNetworkString("ErrorTypeIcon")
