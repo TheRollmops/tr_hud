@@ -8,7 +8,7 @@ A simple HUD for GMOD DarkRP
 * Job/Salary/Wallet
 * Steam Profile Picture or view of PlayerModel
 * Wanted & Licence (Advert Icon)
-* Ammo HUD (Clip/Ammo/Weapon Name
+* Ammo HUD (Clip/Ammo/Weapon Name)
 * Voice Chat HUD
 * Display Notif
 * Death Screen
