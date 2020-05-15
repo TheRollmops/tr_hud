@@ -27,7 +27,7 @@ https://imgur.com/a/Svujb7B
 3. **Optional**: You can add the Server Content for your Workshop Collection: https://steamcommunity.com/sharedfiles/filedetails/?id=2080859509
 
 ### You can take the Workshop Version
-*In this Version you don't have the sh_trhud_config.lua*
+https://steamcommunity.com/sharedfiles/filedetails/?id=2097110605
 1. Coming soon...
 
 ## You need help or you have a bug to report me ?
