@@ -28,7 +28,6 @@ https://imgur.com/a/Svujb7B
 
 ### You can take the Workshop Version
 https://steamcommunity.com/sharedfiles/filedetails/?id=2097110605
-1. Coming soon...
 
 ## You need help or you have a bug to report me ?
 **Contact me**: https://steamcommunity.com/id/TheRollmops/
